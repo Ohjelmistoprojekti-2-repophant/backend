@@ -27,6 +27,14 @@ public class ProjectService {
         return projectRepository.save(project);
     }
 
+    public Project updateProject(Long id, Project updatedProject) {
+        return projectRepository.findById(id).map(project -> {
+            project.setName(updatedProject.getName());
+            project.setDescription(updatedProject.getDescription());
+            return projectRepository.save(project);
+        }).orElseThrow(() -> new IllegalArgumentException("Project with ID " + id + " not found"));
+    }
+
     public void deleteProject(Long id) {
         if (!projectRepository.existsById(id)) {
             throw new IllegalArgumentException("Cannot delete. Project with ID " + id + " not found.");
