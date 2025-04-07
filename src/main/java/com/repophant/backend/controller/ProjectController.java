@@ -17,7 +17,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/projects")
-@CrossOrigin(origins = "*")
 @Tag(name = "Project Viewing Application", description = "Operations for managing projects")
 public class ProjectController {
     
