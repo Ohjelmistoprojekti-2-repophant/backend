@@ -1,10 +1,12 @@
 package com.repophant.backend.domain;
 
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import jakarta.persistence.GenerationType;
@@ -31,11 +33,15 @@ public class Project {
     @Size(max = 200, message = "Repository link must be less than 200 characters")
     private String repositoryLink;
 
+    @OneToMany(mappedBy = "project")
+    private List<Review> reviews;
+
     // Default constructor required by JPA
     public Project() {
     }
 
-    // Parameterized constructor to initialize Project with name, description, language, and repository link
+    // Parameterized constructor to initialize Project with name, description,
+    // language, and repository link
     public Project(String name, String description, String language, String repositoryLink) {
         this.name = name;
         this.description = description;
@@ -83,11 +89,21 @@ public class Project {
         this.repositoryLink = repositoryLink;
     }
 
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
     // equals method
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Project project = (Project) o;
         return Objects.equals(id, project.id);
     }
