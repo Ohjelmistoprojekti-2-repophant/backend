@@ -2,10 +2,13 @@ package com.repophant.backend.domain;
 
 import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
@@ -31,6 +34,8 @@ public class Review {
     private String poster;
 
     @ManyToOne
+    @JoinColumn(name = "project_id", nullable = false)
+    @JsonIgnore
     private Project project;
 
     private Instant postedAt;
