@@ -1,5 +1,6 @@
 package com.repophant.backend.domain;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,17 +37,17 @@ public class Project {
     @OneToMany(mappedBy = "project")
     private List<Review> reviews;
 
-    // Default constructor required by JPA
+    private Instant createdAt;
+
     public Project() {
     }
 
-    // Parameterized constructor to initialize Project with name, description,
-    // language, and repository link
-    public Project(String name, String description, String language, String repositoryLink) {
+    public Project(String name, String description, String language, String repositoryLink, Instant createdAt) {
         this.name = name;
         this.description = description;
         this.language = language;
         this.repositoryLink = repositoryLink;
+        this.createdAt = createdAt;
     }
 
     public Long getId() {
@@ -69,6 +70,10 @@ public class Project {
         return repositoryLink;
     }
 
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -89,6 +94,10 @@ public class Project {
         this.repositoryLink = repositoryLink;
     }
 
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public List<Review> getReviews() {
         return reviews;
     }
@@ -97,7 +106,6 @@ public class Project {
         this.reviews = reviews;
     }
 
-    // equals method
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -108,13 +116,11 @@ public class Project {
         return Objects.equals(id, project.id);
     }
 
-    // hashCode method
     @Override
     public int hashCode() {
         return Objects.hash(id);
     }
 
-    // toString method
     @Override
     public String toString() {
         return "Project{" +
@@ -123,6 +129,7 @@ public class Project {
                 ", description='" + description + '\'' +
                 ", language='" + language + '\'' +
                 ", repositoryLink='" + repositoryLink + '\'' +
+                ", createdAt=" + createdAt +
                 '}';
     }
 }
