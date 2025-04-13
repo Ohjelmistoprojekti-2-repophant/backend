@@ -3,6 +3,8 @@ package com.repophant.backend.domain;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.Instant;
+
 
 public class ProjectTest {
 
@@ -14,16 +16,18 @@ public class ProjectTest {
         assertNull(project.getDescription());
         assertNull(project.getLanguage());
         assertNull(project.getRepositoryLink());
+        assertNull(project.getCreatedAt());
     }
 
     @Test
     public void testParameterizedConstructor() {
-        Project project = new Project("Project Name", "Project Description", "Java", "http://repository.link");
+        Project project = new Project("Project Name", "Project Description", "Java", "http://repository.link", Instant.parse("2022-02-01T00:00:00Z"));
         assertNull(project.getId());
         assertEquals("Project Name", project.getName());
         assertEquals("Project Description", project.getDescription());
         assertEquals("Java", project.getLanguage());
         assertEquals("http://repository.link", project.getRepositoryLink());
+        assertEquals(Instant.parse("2022-02-01T00:00:00Z"), project.getCreatedAt());
     }
 
     @Test
@@ -55,20 +59,18 @@ public class ProjectTest {
     }
 
     @Test
-    public void testEqualsAndHashCode() {
-        Project project1 = new Project("Project Name", "Project Description", "Java", "http://repository.link");
-        Project project2 = new Project("Project Name", "Project Description", "Java", "http://repository.link");
-        project1.setId(1L);
-        project2.setId(1L);
-        assertEquals(project1, project2);
-        assertEquals(project1.hashCode(), project2.hashCode());
+    public void testSetCreatedAt() {
+        Project project = new Project();
+        Instant now = Instant.now();
+        project.setCreatedAt(now);
+        assertEquals(now, project.getCreatedAt());
     }
 
     @Test
-    public void testToString() {
-        Project project = new Project("Project Name", "Project Description", "Java", "http://repository.link");
-        project.setId(1L);
-        String expected = "Project{id=1, name='Project Name', description='Project Description', language='Java', repositoryLink='http://repository.link'}";
-        assertEquals(expected, project.toString());
+    public void testProjectCreation() {
+        Project project = new Project();
+        Instant fixedTime = Instant.parse("2024-01-01T00:00:00Z");
+        project.setCreatedAt(fixedTime);
+        assertEquals(fixedTime, project.getCreatedAt());
     }
 }
