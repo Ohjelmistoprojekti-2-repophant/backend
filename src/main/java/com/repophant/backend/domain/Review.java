@@ -44,8 +44,7 @@ public class Review {
         this.postedAt = Instant.now();
     }
 
-    public Review(Long id, String title, String body, String user, Project project) {
-        this.id = id;
+    public Review(String title, String body, String user, Project project) {
         this.title = title;
         this.body = body;
         this.poster = user;
