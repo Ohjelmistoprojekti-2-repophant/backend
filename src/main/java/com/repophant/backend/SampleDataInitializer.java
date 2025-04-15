@@ -59,11 +59,11 @@ public class SampleDataInitializer {
             projectRepository.saveAll(List.of(p1, p2, p3, p4, p5));
 
             // Sample reviews
-            Review r1 = new Review(null, "Very useful tool!", "This project helped me clean up my text files efficiently.", "alice", p1);
-            Review r2 = new Review(null, "Great for students!", "The course planner is intuitive and easy to use.", "bob", p2);
-            Review r3 = new Review(null, "Impressive frontend!", "The UI is clean and responsive.", "charlie", p3);
-            Review r4 = new Review(null, "Solid backend!", "The API is well-documented and easy to integrate.", "dave", p4);
-            Review r5 = new Review(null, "Highly recommended!", "Taskmaster is a game-changer for project management.", "eve", p5);
+            Review r1 = new Review("Very useful tool!", "This project helped me clean up my text files efficiently.", "alice", p1);
+            Review r2 = new Review("Great for students!", "The course planner is intuitive and easy to use.", "bob", p2);
+            Review r3 = new Review("Impressive frontend!", "The UI is clean and responsive.", "charlie", p3);
+            Review r4 = new Review("Solid backend!", "The API is well-documented and easy to integrate.", "dave", p4);
+            Review r5 = new Review("Highly recommended!", "Taskmaster is a game-changer for project management.", "eve", p5);
 
             reviewRepository.saveAll(List.of(r1, r2, r3, r4, r5));
         };
