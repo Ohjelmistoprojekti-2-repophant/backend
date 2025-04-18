@@ -44,13 +44,26 @@ classDiagram
     Project "1" -- "many" Review : contains
 ```
 
+## Prerequisites
+
+- **Java**
+- **Maven**
+
+```
+git clone https://github.com/Ohjelmistoprojekti-2-repophant/backend.git
+cd backend
+mvn spring-boot:run
+```
+
 ## Tools
 
-- **Backend Framework**: Spring Boot 3.4.1
+- **Backend Framework**: Spring Boot 3.4.1 with Java 21
+- **Build tool**: Maven
 - **Database**: PostgreSQL
-- **Authentication**: OAuth2 with GitHub
+- **Authentication**: Spring Security with GitHub OAuth2
 - **API Documentation**: OpenAPI 3.0, API documentation at `http://localhost:8080/swagger-ui.html`
-- **Testing**: JUnit 5, Mockito
+- **Tests**: JUnit 5, Mockito
+- **Style and Format**: Spotless with Google's style
 
 ## Team
 
