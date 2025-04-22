@@ -16,6 +16,7 @@ public class ProjectTest {
     assertNull(project.getLanguage());
     assertNull(project.getRepositoryLink());
     assertNull(project.getCreatedAt());
+    assertNull(project.getPushedAt());
   }
 
   @Test
@@ -26,6 +27,7 @@ public class ProjectTest {
             "Project Description",
             "Java",
             "http://repository.link",
+            Instant.parse("2022-02-01T00:00:00Z"),
             Instant.parse("2022-02-01T00:00:00Z"));
     assertNull(project.getId());
     assertEquals("Project Name", project.getName());
@@ -33,6 +35,7 @@ public class ProjectTest {
     assertEquals("Java", project.getLanguage());
     assertEquals("http://repository.link", project.getRepositoryLink());
     assertEquals(Instant.parse("2022-02-01T00:00:00Z"), project.getCreatedAt());
+    assertEquals(Instant.parse("2022-02-01T00:00:00Z"), project.getPushedAt());
   }
 
   @Test
@@ -72,10 +75,20 @@ public class ProjectTest {
   }
 
   @Test
+  public void testSetPushedAt() {
+    Project project = new Project();
+    Instant now = Instant.now();
+    project.setPushedAt(now);
+    assertEquals(now, project.getPushedAt());
+  }
+
+  @Test
   public void testProjectCreation() {
     Project project = new Project();
     Instant fixedTime = Instant.parse("2024-01-01T00:00:00Z");
     project.setCreatedAt(fixedTime);
+    project.setPushedAt(fixedTime);
     assertEquals(fixedTime, project.getCreatedAt());
+    assertEquals(fixedTime, project.getPushedAt());
   }
 }

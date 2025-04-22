@@ -26,6 +26,7 @@ public class SampleDataInitializer {
         p1.setLanguage("Java");
         p1.setRepositoryLink("https://github.com/kvilho/nowhitespaces");
         p1.setCreatedAt(Instant.parse("2024-12-01T00:00:00Z"));
+        p1.setPushedAt(Instant.parse("2024-12-01T00:00:00Z"));
 
         Project p2 = new Project();
         p2.setName("MacroHub");
@@ -33,7 +34,7 @@ public class SampleDataInitializer {
         p2.setLanguage("Java");
         p2.setRepositoryLink("https://github.com/Team-410/MacroHub");
         p2.setCreatedAt(Instant.parse("2023-10-01T00:00:00Z"));
-
+        p2.setPushedAt(Instant.parse("2023-10-01T00:00:00Z"));
         Project p3 = new Project();
         p3.setName("Repophant Frontend");
         p3.setDescription(
@@ -41,6 +42,7 @@ public class SampleDataInitializer {
         p3.setLanguage("JavaScript");
         p3.setRepositoryLink("https://github.com/Ohjelmistoprojekti-2-repophant/frontend");
         p3.setCreatedAt(Instant.parse("2022-08-01T00:00:00Z"));
+        p3.setPushedAt(Instant.parse("2022-08-01T00:00:00Z"));
 
         Project p4 = new Project();
         p4.setName("Repophant Backend");
@@ -48,6 +50,7 @@ public class SampleDataInitializer {
         p4.setLanguage("Java");
         p4.setRepositoryLink("https://github.com/Ohjelmistoprojekti-2-repophant/backend");
         p4.setCreatedAt(Instant.parse("2021-06-01T00:00:00Z"));
+        p4.setPushedAt(Instant.parse("2021-06-01T00:00:00Z"));
 
         Project p5 = new Project();
         p5.setName("Taskmaster");
@@ -56,6 +59,7 @@ public class SampleDataInitializer {
         p5.setLanguage("Java");
         p5.setRepositoryLink("https://github.com/teamroutine/taskmaster");
         p5.setCreatedAt(Instant.parse("2020-05-01T00:00:00Z"));
+        p5.setPushedAt(Instant.parse("2020-05-01T00:00:00Z"));
 
         projectRepository.saveAll(List.of(p1, p2, p3, p4, p5));
 

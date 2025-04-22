@@ -38,15 +38,23 @@ public class Project {
 
   private Instant createdAt;
 
+  private Instant pushedAt;
+
   public Project() {}
 
   public Project(
-      String name, String description, String language, String repositoryLink, Instant createdAt) {
+      String name,
+      String description,
+      String language,
+      String repositoryLink,
+      Instant createdAt,
+      Instant pushedAt) {
     this.name = name;
     this.description = description;
     this.language = language;
     this.repositoryLink = repositoryLink;
     this.createdAt = createdAt;
+    this.pushedAt = pushedAt;
   }
 
   public Long getId() {
@@ -73,6 +81,10 @@ public class Project {
     return createdAt;
   }
 
+  public Instant getPushedAt() {
+    return pushedAt;
+  }
+
   public void setId(Long id) {
     this.id = id;
   }
@@ -95,6 +107,10 @@ public class Project {
 
   public void setCreatedAt(Instant createdAt) {
     this.createdAt = createdAt;
+  }
+
+  public void setPushedAt(Instant pushedAt) {
+    this.pushedAt = pushedAt;
   }
 
   public List<Review> getReviews() {
@@ -137,6 +153,9 @@ public class Project {
         + '\''
         + ", createdAt="
         + createdAt
+        + '\''
+        + ", pushedAt="
+        + pushedAt
         + '}';
   }
 }
