@@ -17,6 +17,7 @@ public class SecurityConfig {
   SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
     http.cors(Customizer.withDefaults())
         .csrf(AbstractHttpConfigurer::disable)
+        .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()))
         .authorizeHttpRequests(
             authorizeRequests ->
                 authorizeRequests
