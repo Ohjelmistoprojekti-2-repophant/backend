@@ -153,7 +153,6 @@ public class Project {
         + '\''
         + ", createdAt="
         + createdAt
-        + '\''
         + ", pushedAt="
         + pushedAt
         + '}';
