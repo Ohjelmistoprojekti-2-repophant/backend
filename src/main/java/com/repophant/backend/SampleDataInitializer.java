@@ -17,6 +17,7 @@ public class SampleDataInitializer {
   public CommandLineRunner initData(
       ProjectRepository projectRepository, ReviewRepository reviewRepository) {
     return args -> {
+      reviewRepository.deleteAll();
       projectRepository.deleteAll();
       if (projectRepository.count() == 0) {
 
