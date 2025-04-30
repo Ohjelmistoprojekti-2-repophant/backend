@@ -2,8 +2,6 @@
 
 ![CI Status](https://github.com/Ohjelmistoprojekti-2-repophant/backend/actions/workflows/ci.yml/badge.svg)
 
-## About
-
 This project is the Backend repository for the blazingly fast and secure Repophant application using Spring Boot. :fire: :fire:
 
 - [Frontend GitHub repository](https://github.com/Ohjelmistoprojekti-2-repophant/frontend)
@@ -12,13 +10,11 @@ This project is the Backend repository for the blazingly fast and secure Repopha
 
 ## Features
 
-- Add projects or create new projects to start collaborating
-- Search through projects that are looking for new collaborators
+- Browse and add projects that are looking for new collaborators
 - Secure OAuth2 authentication with GitHub
-- RESTful API with OpenAPI documentation
 - PostgreSQL database integration
 
-## Project Structure
+## Data structure
 
 ```mermaid
 classDiagram
@@ -29,6 +25,7 @@ classDiagram
         +String language
         +String repositoryLink
         +Instant createdAt
+        +Instant pushedAt
         +List~Review~ reviews
     }
     
@@ -46,24 +43,40 @@ classDiagram
 
 ## Prerequisites
 
-- **Java**
-- **Maven**
+- **Java** 21
+
+## Installation
 
 ```
 git clone https://github.com/Ohjelmistoprojekti-2-repophant/backend.git
 cd backend
-mvn spring-boot:run
+./mvnw spring-boot:run
 ```
 
-## Tools
+## REST API
 
-- **Backend Framework**: Spring Boot 3.4.1 with Java 21
-- **Build tool**: Maven
-- **Database**: PostgreSQL
-- **Authentication**: Spring Security with GitHub OAuth2
-- **API Documentation**: OpenAPI 3.0, API documentation at `http://localhost:8080/swagger-ui.html`
-- **Tests**: JUnit 5, Mockito
-- **Style and Format**: Spotless with Google's style
+The REST API has Swagger documentation (accessible when the server is running). `http://localhost:8080/swagger-ui/index.html`
+  
+## Testing
+
+Run all the tests in the same directory where the pom.xml is
+
+```java
+./mvnw test
+```
+
+## Style and formatting
+
+This project uses the [Spotless Maven plugin](https://github.com/diffplug/spotless/tree/main/plugin-maven) to format Java code according to the [Google Java Style Guide](https://google.github.io/styleguide/).
+
+Spotless is not enforced in CI and won't block commits or builds.
+To check and apply formatting manually use:
+```java
+./mvnw spotless:check
+```
+```java
+./mvnw spotless:apply
+```
 
 ## Team
 
