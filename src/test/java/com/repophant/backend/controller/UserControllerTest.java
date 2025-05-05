@@ -3,6 +3,7 @@ package com.repophant.backend.controller;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,8 @@ public class UserControllerTest {
 
   @Mock private Authentication authentication;
 
+  @Mock private HttpServletRequest request;
+
   @BeforeEach
   public void setUp() {
     MockitoAnnotations.openMocks(this);
@@ -49,11 +52,12 @@ public class UserControllerTest {
     when(accessToken.getTokenValue()).thenReturn("test-token");
 
     // Test
-    ResponseEntity<Map<String, String>> response = userController.getGithubToken();
+    ResponseEntity<Map<String, String>> response = userController.getGithubToken(request);
 
     // Verify
     assertEquals(200, response.getStatusCode().value());
     assertEquals("test-token", response.getBody().get("token"));
+    verify(request).setAttribute("oauthToken", "test-token");
   }
 
   @Test
@@ -62,7 +66,7 @@ public class UserControllerTest {
     when(securityContext.getAuthentication()).thenReturn(null);
 
     // Test
-    ResponseEntity<Map<String, String>> response = userController.getGithubToken();
+    ResponseEntity<Map<String, String>> response = userController.getGithubToken(request);
 
     // Verify
     assertEquals(401, response.getStatusCode().value());
@@ -76,7 +80,7 @@ public class UserControllerTest {
     when(securityContext.getAuthentication()).thenReturn(authentication);
 
     // Test
-    ResponseEntity<Map<String, String>> response = userController.getGithubToken();
+    ResponseEntity<Map<String, String>> response = userController.getGithubToken(request);
 
     // Verify
     assertEquals(401, response.getStatusCode().value());
@@ -94,7 +98,7 @@ public class UserControllerTest {
     when(authorizedClientService.loadAuthorizedClient("github", "test-user")).thenReturn(null);
 
     // Test
-    ResponseEntity<Map<String, String>> response = userController.getGithubToken();
+    ResponseEntity<Map<String, String>> response = userController.getGithubToken(request);
 
     // Verify
     assertEquals(401, response.getStatusCode().value());
