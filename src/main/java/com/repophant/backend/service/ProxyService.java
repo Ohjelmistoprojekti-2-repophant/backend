@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Base64;
 import java.util.Enumeration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,6 +33,9 @@ public class ProxyService {
 
   @Value("${spring.security.oauth2.client.registration.github.client-secret}")
   private String clientSecret;
+
+  @Value("${defaultUrl}")
+  private String defaultUrl;
 
   public ResponseEntity<String> processProxyRequest(
       String body,
@@ -81,10 +83,12 @@ public class ProxyService {
     // Add custom headers
     headers.set("TRACE", traceId);
 
-    // Add Basic Authorization header
-    String credentials = clientId + ":" + clientSecret;
-    String encodedAuthorization = Base64.getEncoder().encodeToString(credentials.getBytes());
-    headers.set("Authorization", "Basic " + encodedAuthorization);
+    // Use OAuth2 token for GitHub API authentication
+    String oauthToken =
+        (String) request.getAttribute("oauthToken"); // Retrieve token from request attribute
+    if (oauthToken != null) {
+      headers.set("Authorization", "Bearer " + oauthToken);
+    }
 
     // Remove unnecessary headers
     headers.remove(HttpHeaders.ACCEPT_ENCODING);
@@ -106,14 +110,17 @@ public class ProxyService {
       // Clean up response headers
       HttpHeaders responseHeaders = new HttpHeaders();
       responseHeaders.putAll(serverResponse.getHeaders());
+
       responseHeaders.remove(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN);
       responseHeaders.remove(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS);
+
+      logger.info("Response Headers: {}", responseHeaders);
 
       return ResponseEntity.status(serverResponse.getStatusCode())
           .headers(responseHeaders)
           .body(serverResponse.getBody());
     } catch (HttpStatusCodeException e) {
-      logger.error(e.getMessage());
+      logger.error("Error during proxy request: {}", e.getMessage(), e);
       return ResponseEntity.status(e.getStatusCode())
           .headers(e.getResponseHeaders())
           .body(e.getResponseBodyAsString());
@@ -129,8 +136,8 @@ public class ProxyService {
       HttpServletResponse response,
       String traceId) {
 
-    logger.error("Retry method for the following URL failed: " + request.getRequestURI());
-    logger.error("Error message: " + e.getMessage(), e);
+    logger.error("Retry method for the following URL failed: {}", request.getRequestURI());
+    logger.error("Error message: {}", e.getMessage(), e);
 
     throw new RuntimeException(
         "There was an error processing your request. Please try again later.");

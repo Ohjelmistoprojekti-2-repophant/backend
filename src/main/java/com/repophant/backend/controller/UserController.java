@@ -1,5 +1,6 @@
 package com.repophant.backend.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -27,7 +28,7 @@ public class UserController {
   }
 
   @GetMapping("api/github-token")
-  public ResponseEntity<Map<String, String>> getGithubToken() {
+  public ResponseEntity<Map<String, String>> getGithubToken(HttpServletRequest request) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
     if (authentication instanceof OAuth2AuthenticationToken) {
@@ -37,7 +38,9 @@ public class UserController {
               oauthToken.getAuthorizedClientRegistrationId(), oauthToken.getName());
 
       if (client != null) {
-        return ResponseEntity.ok(Map.of("token", client.getAccessToken().getTokenValue()));
+        String token = client.getAccessToken().getTokenValue();
+        request.setAttribute("oauthToken", token);
+        return ResponseEntity.ok(Map.of("token", token));
       }
     }
 

@@ -3,6 +3,7 @@ package com.repophant.backend.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,23 +16,24 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
 
   @Value("${defaultUrl}")
-  private String url;
+  private String defaultUrl;
 
   @Bean
   SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
     http.cors(Customizer.withDefaults())
         .csrf(AbstractHttpConfigurer::disable)
-        .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()))
         .authorizeHttpRequests(
             authorizeRequests ->
                 authorizeRequests
+                    .requestMatchers(HttpMethod.OPTIONS, "/**")
+                    .permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/api/github-token"))
                     .authenticated()
                     .requestMatchers(new AntPathRequestMatcher("/api/user-info"))
                     .authenticated()
                     .anyRequest()
                     .permitAll())
-        .oauth2Login(oauth2 -> oauth2.defaultSuccessUrl(url, true));
+        .oauth2Login(Customizer.withDefaults());
 
     return http.build();
   }
